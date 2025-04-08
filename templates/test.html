@@ -26,7 +26,6 @@
 	    margin:0 10px;
 	}
 	#prediction-display {
-	    padding: 10px;
 	    background-color: black;
 	    color: white;
 	    width:600px;
@@ -38,6 +37,9 @@
 	    width: auto;
 	    display: flex;
 	    flex-direction: column;
+	}
+	h2 {
+	    margin: 5px;
 	}
     </style>
 </head>
@@ -114,15 +116,19 @@
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ imagen: imageData, operacion: operation, prediccion: predict })
 	  })
-              .then(response => response.json())
-      .then(data => {
-      if (!data.predict) {
-      alert(data.mensaje)
-      return;
-      }
-      document.querySelector("div#prediction-display").innerText = data.response;
-      })
-              .catch(error => console.error("Error:", error));
+	      .then(response => response.json())
+	      .then(data => {
+		  if (!data.predict) {
+		      alert(data.mensaje)
+		      return;
+		  }
+
+		  const json = JSON.parse(data.response.replaceAll("\'","\"").replace("None", "\'\'"));
+
+		  document.querySelector("div#prediction-display").innerHTML =
+		      `<h2>Operacion: ${json.operacion} <br> Resultado: ${json.resultado} <br> Componentes: [${json.componentes.map(c => c)}]</h2>`;
+	      })
+	      .catch(error => console.error("Error:", error));
       }
       
       document.getElementById("clearButton").addEventListener("click", clearCanvas);
