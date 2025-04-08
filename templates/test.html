@@ -17,31 +17,31 @@
         }
 	#container {
 	    display: flex;
-	    height: 35vh;
 	}
 	#prediction {
+	    width:auto;
+	    height:auto;
+	    display: flex;
+	    flex-direction:column;
+	    margin:0 10px;
 	}
 	#prediction-display {
 	    padding: 10px;
 	    background-color: black;
-	    width: 45vw;
-	    height: 100%;
 	    color: white;
-	}
-	#predict-button {
-	    height: 26vh;
-	    display:flex;
-	    align-items:center;
-	    margin: 0 5px;
+	    width:600px;
+	    height:170px;
+	    flex-grow: 2;
 	}
 	#canvas {
-	    width: 45vw;
+	    height: auto;
+	    width: auto;
 	    display: flex;
 	    flex-direction: column;
 	}
     </style>
 </head>
-<body>
+<body style="display:flex;justify-content:center;">
     <div id="container">
       <div id="canvas">
 	<h2>Escribe un número a mano</h2>
@@ -52,14 +52,12 @@
 	<input type="text" id="operationInput" placeholder="Escribe la operación">
 	<button id="saveButton">Guardar Imagen</button>
       </div>
-      <div id="predict-button">
-	<button id="predict">Predecir</button>
-      </div>
-      <div id="prediction">
+	<div id="prediction">
 	<h2>Prediccion</h2>
 	<div id="prediction-display">
 	</div>
-      </div>
+	<button id="predict">Predecir</button>
+	</div>
     </div>
     
     <script>
