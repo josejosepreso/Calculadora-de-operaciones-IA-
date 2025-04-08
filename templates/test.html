@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escribir Números a Mano</title>
+    <style>
+        canvas {
+            border: 2px solid black;
+            background-color: white;
+            touch-action: none;
+        }
+        button, input {
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+	#container {
+	    display: flex;
+	    height: 35vh;
+	}
+	#prediction {
+	}
+	#prediction-display {
+	    padding: 10px;
+	    background-color: black;
+	    width: 45vw;
+	    height: 100%;
+	    color: white;
+	}
+	#predict-button {
+	    height: 26vh;
+	    display:flex;
+	    align-items:center;
+	    margin: 0 5px;
+	}
+	#canvas {
+	    width: 45vw;
+	    display: flex;
+	    flex-direction: column;
+	}
+    </style>
+</head>
+<body>
+    <div id="container">
+      <div id="canvas">
+	<h2>Escribe un número a mano</h2>
+	<canvas id="drawCanvas" width="640" height="128"></canvas>
+	<br>
+	<button id="clearButton">Limpiar</button>
+	<br>
+	<input type="text" id="operationInput" placeholder="Escribe la operación">
+	<button id="saveButton">Guardar Imagen</button>
+      </div>
+      <div id="predict-button">
+	<button id="predict">Predecir</button>
+      </div>
+      <div id="prediction">
+	<h2>Prediccion</h2>
+	<div id="prediction-display">
+	</div>
+      </div>
+    </div>
+    
+    <script>
+      const canvas = document.getElementById("drawCanvas");
+      const ctx = canvas.getContext("2d");
+      let drawing = false;
+      
+      // Inicializa el fondo blanco
+      function initCanvas() {
+	  ctx.fillStyle = "white";
+	  ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
+      
+      canvas.addEventListener("mousedown", startDrawing);
+      canvas.addEventListener("mouseup", stopDrawing);
+      canvas.addEventListener("mousemove", draw);
+      
+      function startDrawing(event) {
+	  drawing = true;
+	  ctx.beginPath();
+	  ctx.moveTo(event.offsetX, event.offsetY);
+      }
+      
+      function stopDrawing() {
+	  drawing = false;
+	  ctx.closePath();
+      }
+      
+      function draw(event) {
+	  if (!drawing) return;
+	  ctx.lineWidth = 10;
+	  ctx.lineCap = "round";
+	  ctx.strokeStyle = "black";
+	  ctx.lineTo(event.offsetX, event.offsetY);
+	  ctx.stroke();
+      }
+      
+      function clearCanvas() {
+	  ctx.fillStyle = "white";
+	  ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
+      
+      function saveImage(predict) {
+	  const operation = document.getElementById("operationInput").value.trim();
+	  if (!predict && !operation) {
+              alert("Por favor, escribe la operación.");
+              return;
+	  }
+	  
+	  const imageData = canvas.toDataURL("image/png");
+	  
+	  fetch("http://localhost:3000/guardar", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ imagen: imageData, operacion: operation, prediccion: predict })
+	  })
+              .then(response => response.json())
+      .then(data => {
+      if (!data.predict) {
+      alert(data.mensaje)
+      return;
+      }
+      document.querySelector("div#prediction-display").innerText = data.response;
+      })
+              .catch(error => console.error("Error:", error));
+      }
+      
+      document.getElementById("clearButton").addEventListener("click", clearCanvas);
+      document.getElementById("saveButton").addEventListener("click", saveImage.bind(null, false));
+      document.querySelector("button#predict").addEventListener("click", saveImage.bind(null, true));
+      
+      // Inicializa el lienzo con fondo blanco
+      initCanvas();      
+    </script>
+</body>
+</html>
