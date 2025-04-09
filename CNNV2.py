@@ -7,6 +7,13 @@ import os
 import json
 from sklearn.model_selection import train_test_split
 
+class myCallback(tf.keras.callbacks.Callback):
+  def on_epoch_end(self, epoch, logs={}):
+    print(logs)
+    if(logs.get('accuracy') > 0.99):
+      print("\nReached 99% accuracy so cancelling training!")
+      self.model.stop_training = True
+
 # Configuración
 TAMAÑO_ENTRADA = (128, 128)  # Tamaño para cada dígito/operador
 RUTA_MODELO = 'modelo_clasificador.keras'
@@ -132,11 +139,15 @@ def main():
     
     print("Creando y entrenando modelo...")
     modelo = crear_modelo_clasificador()
+
+    callbacks = myCallback()
     
     modelo.fit(X_train, y_train,
-              epochs=20,
+              epochs=10,
               batch_size=32,
-              validation_data=(X_val, y_val))
+              validation_data=(X_val, y_val),
+              callbacks=[callbacks]
+    )
     
     print(f"Guardando modelo en {RUTA_MODELO}...")
     modelo.save(RUTA_MODELO)
