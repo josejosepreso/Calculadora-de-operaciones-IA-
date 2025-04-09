@@ -4,15 +4,15 @@ import subprocess
 import json
 import re
 
-datos = []
-
-next_json_value = 181
-n = 1000
-
 numbers = [ f"numbers/{i}" for i in os.listdir("numbers") ]
 symbols = [ f"symbols/{i}" for i in os.listdir("symbols") ]
 
-for _ in range(n):
+json = json.load(open("../datos.json", "r"))
+next_json_value = 1 + int(re.findall("\\d+", json[len(json) - 1]["imagen"])[0])
+
+datos = []
+
+for _ in range(2000):
     first = []
     second = []
     

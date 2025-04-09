@@ -46,7 +46,29 @@ function calcularOperacion(operacion) {
 // Ruta para guardar la imagen y actualizar JSON
 app.post('/guardar', (req, res) => {    
     const { imagen, operacion, prediccion } = req.body;
-    
+
+    if (req.body.prediccion) {
+    	const base64Data = imagen.replace(/^data:image\/png;base64,/, "");
+    	fs.writeFileSync("test.png", base64Data, 'base64');
+
+	fetch("http://localhost:5000/", {
+	    method: "POST",
+	    headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+		img_name: "test.png"
+	    })
+	})
+	    .then(res => res.json())
+	    .then(data => {
+		res.status(200).json({ response: data, predict: true });
+	    })
+	    .catch(err => {
+		console.log(err);
+	    });
+	
+	return;
+    }
+
     if ((!imagen || !operacion) && !prediccion) {
         return res.status(400).json({ error: 'Faltan datos en la solicitud' });
     }
@@ -60,6 +82,9 @@ app.post('/guardar', (req, res) => {
         jsonData = jsonContent ? JSON.parse(jsonContent) : [];
     }
 
+    // Calcular los resultados
+    const resultados = calcularOperacion(operacion);
+
     // Nombre de la imagen (img_001.png, img_002.png, etc.)
     const fileName = `img_${String(jsonData.length + 1).padStart(3, '0')}.png`;
     const imagePath = path.join(imageDir, fileName);
@@ -68,33 +93,9 @@ app.post('/guardar', (req, res) => {
     const base64Data = imagen.replace(/^data:image\/png;base64,/, "");
     fs.writeFileSync(imagePath, base64Data, 'base64');
 
-    // Calcular los resultados
-    const resultados = calcularOperacion(operacion);
-
     // Agregar la nueva entrada al JSON
     jsonData.push({ imagen: fileName, operacion, resultados });
     fs.writeFileSync(jsonFilePath, JSON.stringify(jsonData, null, 4));
-
-    if (req.body.prediccion) {
-	let resp = "";
-	
-	fetch("http://localhost:5000/", {
-	    method: "POST",
-	    headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-		img_name: fileName
-	    })
-	})
-	    .then(res => res.json())
-	    .then(data => {
-		res.status(200).json({ response: data, predict: true });
-	    })
-	    .catch(err => {
-		console.log(err);
-	    });
-	
-	return;
-    }
 
     res.json({ mensaje: 'Imagen guardada y JSON actualizado', archivo: fileName, predict: false });    
 });

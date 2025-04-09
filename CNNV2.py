@@ -142,7 +142,7 @@ def main():
     callbacks = myCallback()
     
     modelo.fit(X_train, y_train,
-              epochs=10,
+              epochs=5,
               batch_size=32,
               validation_data=(X_val, y_val),
               callbacks=[callbacks]

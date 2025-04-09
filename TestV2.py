@@ -120,6 +120,7 @@ def main(file_path):
     # Ejemplo con imagen específica
     # ejemplo_path = './imagenes/img_174.png'
     ejemplo_path = './imagenes/' + file_path
+    ejemplo_path = file_path
     resultado = ""
     if os.path.exists(ejemplo_path):
         # print("\nProcesando imagen de ejemplo:")
