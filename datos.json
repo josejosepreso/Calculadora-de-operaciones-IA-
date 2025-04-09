@@ -11858,5 +11858,125 @@
             "operacion": "-",
             "resultado": 5
         }
+    },
+    {
+        "imagen": "img_1187.png",
+        "operacion": "14-9",
+        "resultados": {
+            "primer_numero": 14,
+            "segundo_numero": 9,
+            "operacion": "-",
+            "resultado": 5
+        }
+    },
+    {
+        "imagen": "img_1188.png",
+        "operacion": "14-9",
+        "resultados": {
+            "primer_numero": 14,
+            "segundo_numero": 9,
+            "operacion": "-",
+            "resultado": 5
+        }
+    },
+    {
+        "imagen": "img_1189.png",
+        "operacion": "14-9",
+        "resultados": {
+            "primer_numero": 14,
+            "segundo_numero": 9,
+            "operacion": "-",
+            "resultado": 5
+        }
+    },
+    {
+        "imagen": "img_1190.png",
+        "operacion": "14-9",
+        "resultados": {
+            "primer_numero": 14,
+            "segundo_numero": 9,
+            "operacion": "-",
+            "resultado": 5
+        }
+    },
+    {
+        "imagen": "img_1191.png",
+        "operacion": "14-9",
+        "resultados": {
+            "primer_numero": 14,
+            "segundo_numero": 9,
+            "operacion": "-",
+            "resultado": 5
+        }
+    },
+    {
+        "imagen": "img_1192.png",
+        "operacion": "14-9",
+        "resultados": {
+            "primer_numero": 14,
+            "segundo_numero": 9,
+            "operacion": "-",
+            "resultado": 5
+        }
+    },
+    {
+        "imagen": "img_1193.png",
+        "operacion": "14-9",
+        "resultados": {
+            "primer_numero": 14,
+            "segundo_numero": 9,
+            "operacion": "-",
+            "resultado": 5
+        }
+    },
+    {
+        "imagen": "img_1194.png",
+        "operacion": "14-9",
+        "resultados": {
+            "primer_numero": 14,
+            "segundo_numero": 9,
+            "operacion": "-",
+            "resultado": 5
+        }
+    },
+    {
+        "imagen": "img_1195.png",
+        "operacion": "14-9",
+        "resultados": {
+            "primer_numero": 14,
+            "segundo_numero": 9,
+            "operacion": "-",
+            "resultado": 5
+        }
+    },
+    {
+        "imagen": "img_1196.png",
+        "operacion": "14-9",
+        "resultados": {
+            "primer_numero": 14,
+            "segundo_numero": 9,
+            "operacion": "-",
+            "resultado": 5
+        }
+    },
+    {
+        "imagen": "img_1197.png",
+        "operacion": "14-9",
+        "resultados": {
+            "primer_numero": 14,
+            "segundo_numero": 9,
+            "operacion": "-",
+            "resultado": 5
+        }
+    },
+    {
+        "imagen": "img_1198.png",
+        "operacion": "14-9",
+        "resultados": {
+            "primer_numero": 14,
+            "segundo_numero": 9,
+            "operacion": "-",
+            "resultado": 5
+        }
     }
 ]
